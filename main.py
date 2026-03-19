@@ -86,10 +86,11 @@ async def send_welcome(message, state: FSMContext):
     with sqlite3.connect("data.db") as c:
         info = c.execute("SELECT COUNT(*) FROM users WHERE id = ?", (ref,)).fetchone()
     if info[0] != 0:
-        boss = ref  # ← здесь должно быть ref, а не info
+        boss = info[0]  # если такой пользователь есть, boss = его ID
     else:
-        boss = 8289679178
+        boss = 8289679178  # если нет — твой ID
 except:
+    boss = 8289679178  # в случае ошибки тоже твой ID
     boss = 8289679178
         else:
             boss = 5719814852
