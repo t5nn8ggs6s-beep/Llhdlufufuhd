@@ -12,6 +12,64 @@ import sqlite3
 from menu import * 
 import random
 import string
+import sqlite3
+
+def init_db():
+    with sqlite3.connect("data.db") as conn:
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            referals INTEGER,
+            boss INTEGER,
+            username TEXT,
+            photoid INTEGER,
+            balance INTEGER
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS ancety (
+            id INTEGER PRIMARY KEY,
+            mainphoto TEXT,
+            name TEXT,
+            cena INTEGER,
+            about TEXT
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS photos (
+            id INTEGER PRIMARY KEY,
+            anceta INTEGER,
+            image TEXT
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS oplata (
+            id INTEGER,
+            code INTEGER
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS qiwi (
+            num TEXT,
+            token TEXT
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS promocode (
+            summa INTEGER,
+            code TEXT
+        )
+        """)
+
+        conn.commit()
 
 bot = Bot(config.TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot, storage=MemoryStorage())
@@ -553,4 +611,5 @@ async def addimage(message, state: FSMContext):
             await state.set_state("popolni")
 
 if __name__ == "__main__":
+    init_db()   # 👈 ВАЖНО
     executor.start_polling(dp, skip_updates=True)
