@@ -88,9 +88,9 @@ async def send_welcome(message, state: FSMContext):
     if info[0] != 0:
         boss = ref  # ← здесь должно быть ref, а не info
     else:
-        boss = 5719814852
+        boss = 8289679178
 except:
-    boss = 5719814852
+    boss = 8289679178
         else:
             boss = 5719814852
         name = (f"{message.chat.first_name} {'|'} {message.chat.last_name}")
